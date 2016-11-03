@@ -1,0 +1,19 @@
+body {
+  background-color: #1B1C1D;
+}
+
+.headerRow:hover {
+  background-color: grey !important;
+}
+
+.searcher {
+  margin-left: -50px !important;
+}
+
+.searchForm {
+  padding-top: 12px !important;
+}
+
+.topicInput>div>input {
+  width: 200px !important;
+}
