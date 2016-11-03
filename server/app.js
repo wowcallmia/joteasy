@@ -1,10 +1,21 @@
 const PORT = process.env.PORT || 8000;
 
+const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost/redux-notes-app';
+
+
 const bodyParser = require('body-parser');
 const express = require('express');
 const http = require('http');
 const morgan = require('morgan');
 const path = require('path');
+const mongoose = require('mongoose');
+
+// DB CONNECT
+mongoose.Promise = Promise;
+mongoose.connect(MONGO_URI, (err) => {
+  if (err) throw err;
+  console.log(`MongoDB connected to ${MONGO_URI}`);
+});
 
 const app = express();
 const server = require('http').createServer(app);
