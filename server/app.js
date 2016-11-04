@@ -1,6 +1,6 @@
 const PORT = process.env.PORT || 8000;
 
-const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost/redux-notes-app';
+const MONGO_URI = process.env.MONGODB_URI || 'mongodb://johnsalay:Elbrus123@ds061246.mlab.com:61246/johndb';
 
 
 const bodyParser = require('body-parser');
