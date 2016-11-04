@@ -27,6 +27,10 @@ router.route('/:id')
   })
   .put((req, res) => {
     Topic.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
+    .then((topic) => {
+      topic.lastUpdated = Date.now();
+      return topic.save();
+    })
     .then((topic) => res.send(topic))
     .catch((err) => res.status(400).send(err));
   })
@@ -45,7 +49,10 @@ router.route('/:id/resources/:resourceId')
       console.log('topic: ', topic);
       let newResources = { resources: topic.resources };
       if (topic.resources.every((r) => r._id.toString() !== rId.toString())) {
-        newResources = { resources: [...topic.resources, rId] };
+        newResources = {
+          resources: [...topic.resources, rId],
+          lastUpdated: Date.now()
+        };
       }
       return Topic.findByIdAndUpdate(req.params.id, { $set: newResources }, { new: true }).populate('resources');
     })
@@ -57,6 +64,7 @@ router.route('/:id/resources/:resourceId')
       .then(() => Topic.findById(req.params.id).populate('resources'))
       .then(topic => {
         topic.resources = topic.resources.filter(r => r != req.params.resourceId);
+        topic.lastUpdated = Date.now();
         return topic.save();
       })
       .then((topic) => res.send(topic))
