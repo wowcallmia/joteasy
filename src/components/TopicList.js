@@ -54,6 +54,7 @@ class TopicList extends Component {
 
   goToResources (topic) {
     console.log('topic: ', topic);
+    this.props.setCurrentTopic(topic._id);
     browserHistory.push(`/topic/${topic._id}`);
   }
 
@@ -138,6 +139,9 @@ let mapDispatchToProps = (dispatch) => ({
   },
   deleteTopic (_id) {
     dispatch(TopicActions.deleteTopic(_id));
+  },
+  setCurrentTopic (topicId) {
+    dispatch(TopicActions.setCurrentTopic(topicId));
   }
 });
 

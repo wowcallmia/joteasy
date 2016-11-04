@@ -3,7 +3,6 @@ import { Button, Icon, Header, Image, Modal, Form } from 'semantic-ui-react';
 
 export default class ModalLife extends Component {
 
-
   render () {
     const type = [
       { text: 'Video', value: 'Video', key: 'Video' },

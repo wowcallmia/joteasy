@@ -31,3 +31,10 @@ export function fetchTopics () {
                   .then((res) => res.data)
   };
 }
+
+export function setCurrentTopic (topicId) {
+  return {
+    type: 'SET_CURRENT_TOPIC',
+    payload: topicId
+  };
+}
