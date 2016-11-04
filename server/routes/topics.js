@@ -42,18 +42,21 @@ router.route('/:id/resources/:resourceId')
     .populate('resources')
     .then((topic) => {
       let rId = req.params.resourceId;
+      console.log('topic: ', topic);
       let newResources = { resources: topic.resources };
       if (topic.resources.every((r) => r._id.toString() !== rId.toString())) {
         newResources = { resources: [...topic.resources, rId] };
       }
-      return Topic.findByIdAndUpdate(req.params.id, { $set: newResources }, { new: true });
+
+      return Topic.findByIdAndUpdate(req.params.id, { $set: newResources }, { new: true }).populate('resources');
+
     })
     .then((topic) => res.send(topic))
     .catch((err) => res.status(400).send(err));
   })
   .delete((req, res) => {
     Resource.findByIdAndRemove(req.params.resourceId)
-      .then(() => Topic.findById(req.params.id))
+      .then(() => Topic.findById(req.params.id).populate('resources'))
       .then(topic => {
         topic.resources = topic.resources.filter(r => r != req.params.resourceId);
         return topic.save();

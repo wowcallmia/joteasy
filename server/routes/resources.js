@@ -48,14 +48,14 @@ router.route('/:id/notes/:noteId')
       if (resource.notes.every(r => r._id.toString() !== rId.toString())) {
         newNotes = { notes: [...resource.notes, rId] };
       }
-      return Resource.findByIdAndUpdate(req.params.id, { $set: newNotes }, { new: true })
+      return Resource.findByIdAndUpdate(req.params.id, { $set: newNotes }, { new: true }).populate('notes');
     })
     .then(resource => res.send(resource))
     .catch(err => res.status(400).send(err));
   })
   .delete((req, res) => {
     Note.findByIdAndRemove(req.params.noteId)
-      .then(() => Resource.findById(req.params.id))
+      .then(() => Resource.findById(req.params.id).populate('notes'))
       .then(resource => {
         resource.notes = resource.notes.filter(r => r != req.params.noteId);
         return resource.save();
