@@ -3,9 +3,8 @@ import Resources from './Resources';
 import Topics from './Topics';
 import { Header, Segment, Icon } from 'semantic-ui-react';
 
-
 export default class Layout extends Component {
-  render() {
+  render () {
     return (
       <Segment inverted>
         <Header inverted as='h2' color='blue' icon textAlign='center'>
@@ -14,9 +13,10 @@ export default class Layout extends Component {
             JotEasy
           </Header.Content>
         </Header>
-        <Topics />
-        {/* <Resources /> */}
+        {this.props.children}
+        {/* <Topics />
+        <Resources /> */}
       </Segment>
-    )
+    );
   }
 }

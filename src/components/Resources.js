@@ -8,14 +8,21 @@ import * as ResourcesActions from '../actions/ResourcesActions';
 
 class Resources extends Component {
 
+  componentWillMount () {
+    this.props.fetchResources(this.props.currentTopic);
+  }
+
   handleSubmit (e, serializedForm) {
-    let { addRead } = this.props;
+    let { addRead, currentTopic } = this.props;
     e.preventDefault();
     document.adder.reset();
-    addRead(serializedForm);
+    // console.log('serializedForm: ', serializedForm);
+    // console.log('currentTopic: ', currentTopic);
+    addRead(serializedForm, currentTopic);
   }
 
   render () {
+    console.log('this.props: ', this.props);
     const type = [
       { text: 'Video', value: 'Video', key: 'Video' },
       { text: 'Book', value: 'Book', key: 'Book' },
@@ -27,7 +34,7 @@ class Resources extends Component {
           <Form.Group size='huge' widths='equal'>
             <Form.Input name='name' placeholder='Descriptive Title' />
             <Form.Select name='type' options={type} placeholder='Type' />
-            <Form.Input name='src' placeholder='SRC' />
+            <Form.Input name='source' placeholder='SRC' />
           </Form.Group>
           <Button inverted color='blue' primary size='huge' type='submit'>Add New Resource</Button>
         </Form>
@@ -38,12 +45,17 @@ class Resources extends Component {
 }
 
 let mapStateToProps = (state) => ({
-
+  resources: state.resources,
+  currentTopic: state.currentTopic
 });
 
 let mapDispatchToProps = (dispatch) => ({
-  addRead (data) {
-    dispatch(ResourcesActions.addRead(data));
+  addRead (data, currTopic) {
+    dispatch(ResourcesActions.addRead(data, currTopic));
+  },
+
+  fetchResources (currTopicId) {
+    dispatch(ResourcesActions.fetchResources(currTopicId));
   }
 });
 

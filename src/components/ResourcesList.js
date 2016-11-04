@@ -10,7 +10,7 @@ class ReadingList extends Component {
     super();
     this.state = {
       open: false,
-      modal: {},
+      modal: {}
     };
 
     this.show = this.show.bind(this);
@@ -18,7 +18,9 @@ class ReadingList extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.sorter = this.sorter.bind(this);
     this.handleSearcher = this.handleSearcher.bind(this);
+    // this._onChange = this._onChange.bind(this);
   }
+
   handleSearcher (e, serializedForm) {
     e.preventDefault();
     this.setState({ search: serializedForm.searchEntry });
@@ -38,9 +40,9 @@ class ReadingList extends Component {
     editRead(serializedForm);
   }
 
-  done (id) {
-    let { doneRead } = this.props;
-    doneRead(id);
+  deleteResource (_id) {
+    let { deleteResource } = this.props;
+    deleteResource(_id);
   }
 
   show (dimmer, cur) {
@@ -52,9 +54,10 @@ class ReadingList extends Component {
   }
 
   render () {
-    let { read } = this.props;
+    let { resources } = this.props;
+    console.log('resources in list: ', resources);
     let { sort, search } = this.state;
-    let tempRead = [...read];
+    let tempRead = [...resources];
     let sorted;
     if (sort === 'Name') {
       sorted = tempRead.sort((a, b) => {
@@ -72,7 +75,7 @@ class ReadingList extends Component {
       sorted = tempRead.filter((cur) => cur.name.toLowerCase().includes(search.toLowerCase()));
       console.log('sorted:', sorted);
     }
-    if (!sort && !search) sorted = read;
+    if (!sort && !search) sorted = resources;
 
     return (
       <div>
@@ -101,7 +104,7 @@ class ReadingList extends Component {
                 <Table.Row key={i}>
                   <Table.Cell>{cur.name}</Table.Cell>
                   <Table.Cell>{cur.type}</Table.Cell>
-                  <Table.Cell width='4'>{cur.src}</Table.Cell>
+                  <Table.Cell width='4'>{cur.source}</Table.Cell>
                   <Table.Cell width='2'>Nov. 01, 2016 12:40pm</Table.Cell>
                   <Table.Cell width='2'>Oct. 31, 2016 3:40pm</Table.Cell>
                   <Table.Cell width='1'>34</Table.Cell>
@@ -110,7 +113,7 @@ class ReadingList extends Component {
                       <Button inverted size='huge' onClick={() => this.show('inverted', cur)}>
                         <Icon color='blue' name='edit' />
                       </Button>
-                      <Button inverted size='huge' onClick={this.done.bind(this, cur.id)}>
+                      <Button inverted size='huge' onClick={this.deleteResource.bind(this, cur._id)}>
                         <Icon color='red' name='trash' />
                       </Button>
                     </Button.Group>
@@ -135,8 +138,8 @@ let mapDispatchToProps = (dispatch) => ({
     console.log('data:', data);
     dispatch(ResourcesActions.editRead(data));
   },
-  doneRead (id) {
-    dispatch(ResourcesActions.doneRead(id));
+  deleteResource (id) {
+    dispatch(ResourcesActions.deleteResource(id));
   }
 });
 
