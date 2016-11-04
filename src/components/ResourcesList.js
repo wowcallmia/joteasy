@@ -107,9 +107,9 @@ class ReadingList extends Component {
                   <Table.Cell>{cur.name}</Table.Cell>
                   <Table.Cell>{cur.type}</Table.Cell>
                   <Table.Cell width='4'>{cur.source}</Table.Cell>
-                  <Table.Cell width='2'>Nov. 01, 2016 12:40pm</Table.Cell>
-                  <Table.Cell width='2'>Oct. 31, 2016 3:40pm</Table.Cell>
-                  <Table.Cell width='1'>34</Table.Cell>
+                  <Table.Cell width='2'>{cur.lastUpdated}</Table.Cell>
+                  <Table.Cell width='2'>{cur.timestamp}</Table.Cell>
+                  <Table.Cell width='1'>{cur.notes.length.toString()}</Table.Cell>
                   <Table.Cell textAlign='left'>
                     <Button.Group icon>
                       <Button inverted size='huge' onClick={() => this.show('inverted', cur)}>

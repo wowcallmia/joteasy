@@ -14,7 +14,6 @@ class Topic extends Component {
     let { addTopic } = this.props;
     e.preventDefault();
     document.adder.reset();
-    // console.log('serializedForm: ', serializedForm);
     addTopic(serializedForm);
   }
 

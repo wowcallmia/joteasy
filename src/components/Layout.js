@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Header, Segment, Icon } from 'semantic-ui-react';
 
 import { browserHistory } from 'react-router';
+import Notes from './Notes';
 
 export default class Layout extends Component {
   goHome () {
