@@ -14,6 +14,7 @@ class Topic extends Component {
     let { addTopic } = this.props;
     e.preventDefault();
     document.adder.reset();
+    // console.log('serializedForm: ', serializedForm);
     addTopic(serializedForm);
   }
 
@@ -24,7 +25,7 @@ class Topic extends Component {
       <div>
         <Form size='huge' name='adder' onSubmit={this.handleSubmit.bind(this)}>
           <Form.Group size='huge' widths='equal'>
-            <Form.Input name='topic' placeholder='Descriptive Title' />
+            <Form.Input name='name' placeholder='Descriptive Title' />
           </Form.Group>
           <Button inverted color='blue' primary size='huge' type='submit'>Add New Topic</Button>
         </Form>

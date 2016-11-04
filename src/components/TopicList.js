@@ -33,14 +33,14 @@ class TopicList extends Component {
   handleSubmit (id, e, serializedForm) {
     let { editTopic } = this.props;
     e.preventDefault();
-    serializedForm.id = id;
+    serializedForm._id = id;
     this.setState({ open: false });
     editTopic(serializedForm);
   }
 
-  done (id) {
+  done (_id) {
     let { deleteTopic } = this.props;
-    deleteTopic(id);
+    deleteTopic(_id);
   }
 
   show (dimmer, cur) {
@@ -95,8 +95,10 @@ class TopicList extends Component {
             {sorted.map((cur, i) => {
               return (
                 <Table.Row key={i}>
-                  <Table.Cell>{cur.topic}</Table.Cell>
-                  <Table.Cell width='2'>Nov. 01, 2016 12:40pm</Table.Cell>
+                  <Table.Cell >{cur.name}</Table.Cell>
+                  {/* <Table.Cell onClick={this.}>{cur.name}</Table.Cell> */}
+                  <Table.Cell width='2'>{cur.timestamp}</Table.Cell>
+                  {/* <Table.Cell width='2'>Nov. 01, 2016 12:40pm</Table.Cell> */}
                   <Table.Cell width='2'>Oct. 31, 2016 3:40pm</Table.Cell>
                   <Table.Cell width='1'>34</Table.Cell>
                   <Table.Cell textAlign='left'>
@@ -104,7 +106,7 @@ class TopicList extends Component {
                       <Button inverted size='huge' onClick={() => this.show('inverted', cur)}>
                         <Icon color='blue' name='edit' />
                       </Button>
-                      <Button inverted size='huge' onClick={this.done.bind(this, cur.id)}>
+                      <Button inverted size='huge' onClick={this.done.bind(this, cur._id)}>
                         <Icon color='red' name='trash' />
                       </Button>
                     </Button.Group>
@@ -128,8 +130,8 @@ let mapDispatchToProps = (dispatch) => ({
   editTopic (data) {
     dispatch(TopicActions.editTopic(data));
   },
-  deleteTopic (id) {
-    dispatch(TopicActions.deleteTopic(id));
+  deleteTopic (_id) {
+    dispatch(TopicActions.deleteTopic(_id));
   }
 });
 
