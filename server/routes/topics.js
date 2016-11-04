@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const Topic = require('../models/Topic');
+const Resource = require('../models/Resource');
 
 router.route('/')
   .get((req, res) => {
@@ -51,7 +52,8 @@ router.route('/:id/resources/:resourceId')
     .catch(err => res.status(400).send(err));
   })
   .delete((req, res) => {
-    Topic.findById(req.params.id)
+    Resource.findByIdAndRemove(req.params.resourceId)
+      .then(() => Topic.findById(req.params.id))
       .then(topic => {
         topic.resources = topic.resources.filter(r => r != req.params.resourceId);
         return topic.save();

@@ -30,6 +30,7 @@ router.route('/:id')
     .catch(err => res.status(400).send(err));
   })
   .delete((req, res) => {
+    console.log('INSIDE DELETE#################');
     Note.findByIdAndRemove(req.params.id)
     .then(note => res.send(note))
     .catch(err => res.status(400).send(err));

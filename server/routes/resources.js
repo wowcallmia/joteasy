@@ -2,7 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
+const axios = require('axios');
+
 const Resource = require('../models/Resource');
+const Note = require('../models/Note');
 
 router.route('/')
   .get((req, res) => {
@@ -51,8 +54,8 @@ router.route('/:id/notes/:noteId')
     .catch(err => res.status(400).send(err));
   })
   .delete((req, res) => {
-    Resource.findById(req.params.id)
-
+    Note.findByIdAndRemove(req.params.noteId)
+      .then(() => Resource.findById(req.params.id))
       .then(resource => {
         resource.notes = resource.notes.filter(r => r != req.params.noteId);
         return resource.save();
