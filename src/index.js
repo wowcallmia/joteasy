@@ -8,7 +8,7 @@ import store from './store';
 import Layout from './components/Layout';
 import Topics from './components/Topics';
 import Resources from './components/Resources';
-import Notes from './components/Notes';
+// import Notes from './components/Notes';
 
 // --HACK enable the route for the notes
 render(
