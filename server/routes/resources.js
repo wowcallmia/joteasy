@@ -17,7 +17,7 @@ router.route('/')
   .post((req, res) => {
     Resource.create(req.body)
     .then(r => res.send(r))
-    .catch(console.error);
+    .catch(err => res.status(400).send(err));
   });
 
 router.route('/:id')
