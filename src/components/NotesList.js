@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router';
 
 import * as ResourcesActions from '../actions/ResourcesActions';
 
-class ReadingList extends Component {
+class NotesList extends Component {
   constructor () {
     super();
     this.state = {
@@ -55,13 +55,6 @@ class ReadingList extends Component {
     this.setState({ open: false });
   }
 
-  // --HACK enable the browserHistory push to go to NOTES component
-  goToNotes (resource) {
-    let { currentTopic } = this.props;
-    console.log('working:');
-    this.props.setCurrentResource(resource);
-    browserHistory.push(`/topic/${resource._id}/notes/`);
-  }
 
   render () {
     let { resources } = this.props;
@@ -141,20 +134,20 @@ class ReadingList extends Component {
 }
 
 let mapStateToProps = (state) => ({
-  resources: state.resources
+  // resources: state.resources
 });
 
 let mapDispatchToProps = (dispatch) => ({
-  editSource (data) {
-    console.log('data of the edit:', data);
-    dispatch(ResourcesActions.editSource(data));
-  },
-  deleteResource (id) {
-    dispatch(ResourcesActions.deleteResource(id));
-  },
-  setCurrentResource (resource) {
-    dispatch(ResourcesActions.setCurrentResource(resource));
-  }
+  // editSource (data) {
+  //   console.log('data of the edit:', data);
+  //   dispatch(ResourcesActions.editSource(data));
+  // },
+  // deleteResource (id) {
+  //   dispatch(ResourcesActions.deleteResource(id));
+  // },
+  // setCurrentResource (resource) {
+  //   dispatch(ResourcesActions.setCurrentResource(resource));
+  // }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReadingList);
+export default connect(mapStateToProps, mapDispatchToProps)(NotesList);

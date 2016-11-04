@@ -17,6 +17,8 @@ class Notes extends Component {
   }
 
   render () {
+    let { resource } = this.props;
+    console.log('resource:', resource);
     return (
       <div>
         <Form size='huge' name='noteAdder' onSubmit={this.handleSubmit.bind(this)}>
@@ -33,7 +35,7 @@ class Notes extends Component {
 }
 
 let mapStateToProps = (state) => ({
-
+  resource: state.currentResource
 });
 
 let mapDispatchToProps = (dispatch) => ({

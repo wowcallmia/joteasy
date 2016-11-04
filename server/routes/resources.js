@@ -29,7 +29,11 @@ router.route('/:id')
   })
   .put((req, res) => {
     Resource.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
-    .then(r => res.send(r))
+    .then((resource) => {
+      resource.lastUpdated = Date.now();
+      return resource.save();
+    })
+    .then((resource) => res.send(resource))
     .catch(err => res.status(400).send(err));
   })
   .delete((req, res) => {
@@ -46,7 +50,10 @@ router.route('/:id/notes/:noteId')
       let rId = req.params.noteId;
       let newNotes = { notes: resource.notes };
       if (resource.notes.every(r => r._id.toString() !== rId.toString())) {
-        newNotes = { notes: [...resource.notes, rId] };
+        newNotes = {
+          notes: [...resource.notes, rId],
+          lastUpdated: Date.now()
+        };
       }
       return Resource.findByIdAndUpdate(req.params.id, { $set: newNotes }, { new: true }).populate('notes');
     })
@@ -58,6 +65,7 @@ router.route('/:id/notes/:noteId')
       .then(() => Resource.findById(req.params.id).populate('notes'))
       .then(resource => {
         resource.notes = resource.notes.filter(r => r != req.params.noteId);
+        resource.lastUpdated = Date.now();
         return resource.save();
       })
       .then(resource => res.send(resource))
