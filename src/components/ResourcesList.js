@@ -21,6 +21,7 @@ class ReadingList extends Component {
     // this._onChange = this._onChange.bind(this);
   }
 
+
   handleSearcher (e, serializedForm) {
     e.preventDefault();
     this.setState({ search: serializedForm.searchEntry });

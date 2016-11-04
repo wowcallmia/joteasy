@@ -60,6 +60,7 @@ class TopicList extends Component {
 
   render () {
     let { topics } = this.props;
+    console.log('topics:', topics);
     let { sort, search } = this.state;
     let tempRead = [...topics];
     let sorted;

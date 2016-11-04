@@ -1,7 +1,7 @@
 
 export default function (state = [], action) {
   switch (action.type) {
-    case 'CREATE_RESOURCE':
+    case 'CREATE_RESOURCE_FULFILLED':
       return [...state, action.payload];
     case 'EDIT':
       let edited = action.payload;
