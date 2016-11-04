@@ -52,9 +52,10 @@ class ReadingList extends Component {
   }
 
   render () {
-    let { read } = this.props;
+    let { resources } = this.props;
+    console.log('resources: ', resources);
     let { sort, search } = this.state;
-    let tempRead = [...read];
+    let tempRead = [...resources];
     let sorted;
     if (sort === 'Name') {
       sorted = tempRead.sort((a, b) => {
@@ -72,7 +73,7 @@ class ReadingList extends Component {
       sorted = tempRead.filter((cur) => cur.name.toLowerCase().includes(search.toLowerCase()));
       console.log('sorted:', sorted);
     }
-    if (!sort && !search) sorted = read;
+    if (!sort && !search) sorted = resources;
 
     return (
       <div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table, Button, Icon, Popup, Header, Image, Modal, Input, Form  } from 'semantic-ui-react';
 import TopicModal from './TopicModal';
+import { browserHistory } from 'react-router';
 
 import * as TopicActions from '../actions/TopicActions';
 
@@ -51,6 +52,11 @@ class TopicList extends Component {
     this.setState({ open: false });
   }
 
+  goToResources (topic) {
+    console.log('topic: ', topic);
+    browserHistory.push(`/topic/${topic._id}`);
+  }
+
   render () {
     let { topics } = this.props;
     let { sort, search } = this.state;
@@ -95,8 +101,8 @@ class TopicList extends Component {
             {sorted.map((cur, i) => {
               return (
                 <Table.Row key={i}>
-                  <Table.Cell >{cur.name}</Table.Cell>
-                  {/* <Table.Cell onClick={this.}>{cur.name}</Table.Cell> */}
+                  {/* <Table.Cell>{cur.name}</Table.Cell> */}
+                  <Table.Cell onClick={this.goToResources.bind(this, cur)}>{cur.name}</Table.Cell>
                   <Table.Cell width='2'>{cur.timestamp}</Table.Cell>
                   {/* <Table.Cell width='2'>Nov. 01, 2016 12:40pm</Table.Cell> */}
                   <Table.Cell width='2'>Oct. 31, 2016 3:40pm</Table.Cell>
