@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export function addTopic (data) {
   return {
     type: 'TOPIC_ADD',
@@ -16,5 +18,13 @@ export function editTopic (data) {
   return {
     type: 'TOPIC_EDIT',
     payload: data
+  };
+}
+
+export function fetchTopics () {
+  return {
+    type: 'FETCH_TOPICS',
+    payload: axios.get('/api/topics/')
+                  .then((res) => res.data)
   };
 }

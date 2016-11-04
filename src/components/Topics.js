@@ -6,6 +6,9 @@ import TopicList from './TopicList';
 import * as TopicActions from '../actions/TopicActions';
 
 class Topic extends Component {
+  componentWillMount () {
+    this.props.fetchTopics();
+  }
 
   handleSubmit (e, serializedForm) {
     let { addTopic } = this.props;
@@ -38,6 +41,10 @@ let mapStateToProps = (state) => ({
 let mapDispatchToProps = (dispatch) => ({
   addTopic (data) {
     dispatch(TopicActions.addTopic(data));
+  },
+
+  fetchTopics () {
+    dispatch(TopicActions.fetchTopics());
   }
 });
 
