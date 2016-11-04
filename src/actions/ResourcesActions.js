@@ -35,3 +35,11 @@ export function fetchResources (currTopic) {
                   .then((res) => res.data.resources)
   };
 }
+
+export function setCurrentResource (currResource) {
+  console.log('currResource in actions: ', currResource);
+  return {
+    type: 'SET_CURRENT_RESOURCE',
+    payload: currResource
+  };
+}

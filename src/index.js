@@ -8,14 +8,16 @@ import store from './store';
 import Layout from './components/Layout';
 import Topics from './components/Topics';
 import Resources from './components/Resources';
+import Notes from './components/Notes';
 
+// --HACK enable the route for the notes
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={Layout}>
         <IndexRoute component={Topics} />
         <Route path='/topic/:id' component={Resources} />
-        {/* <Route path='/:id' component={BusinessPage} /> */}
+        {/* <Route path='/topic/:id/resource/:id' component={Notes} /> */}
       </Route>
     </Router>
   </Provider>,

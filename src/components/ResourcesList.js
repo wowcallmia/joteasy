@@ -54,6 +54,13 @@ class ReadingList extends Component {
     this.setState({ open: false });
   }
 
+  // --HACK enable the browserHistory push to go to NOTES component
+  goToNotes (resource) {
+    let { currentTopic } = this.props;
+    this.props.setCurrentResource(resource);
+    // browserHistory.push(`/topic/${currentTopic}/resource/${resource._id}`);
+  }
+
   render () {
     let { resources } = this.props;
     console.log('resources in list: ', resources);
@@ -104,7 +111,7 @@ class ReadingList extends Component {
               return (
                 <Table.Row key={i}>
                   {console.log('cur: ', cur)}
-                  <Table.Cell>{cur.name}</Table.Cell>
+                  <Table.Cell onClick={this.goToNotes.bind(this, cur)}>{cur.name}</Table.Cell>
                   <Table.Cell>{cur.type}</Table.Cell>
                   <Table.Cell width='4'>{cur.source}</Table.Cell>
                   <Table.Cell width='2'>Nov. 01, 2016 12:40pm</Table.Cell>
@@ -142,6 +149,9 @@ let mapDispatchToProps = (dispatch) => ({
   },
   deleteResource (id) {
     dispatch(ResourcesActions.deleteResource(id));
+  },
+  setCurrentResource (resource) {
+    dispatch(ResourcesActions.setCurrentResource(resource));
   }
 });
 
