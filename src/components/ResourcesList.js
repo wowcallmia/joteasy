@@ -33,11 +33,12 @@ class ReadingList extends Component {
   }
 
   handleSubmit (id, e, serializedForm) {
-    let { editRead } = this.props;
+    let { editSource } = this.props;
     e.preventDefault();
-    serializedForm.id = id;
+    serializedForm._id = id;
     this.setState({ open: false });
-    editRead(serializedForm);
+    // console.log('id in resourceslist: ', id);
+    editSource(serializedForm);
   }
 
   deleteResource (_id) {
@@ -102,6 +103,7 @@ class ReadingList extends Component {
             {sorted.map((cur, i) => {
               return (
                 <Table.Row key={i}>
+                  {console.log('cur: ', cur)}
                   <Table.Cell>{cur.name}</Table.Cell>
                   <Table.Cell>{cur.type}</Table.Cell>
                   <Table.Cell width='4'>{cur.source}</Table.Cell>
@@ -134,9 +136,9 @@ let mapStateToProps = (state) => ({
 });
 
 let mapDispatchToProps = (dispatch) => ({
-  editRead (data) {
-    console.log('data:', data);
-    dispatch(ResourcesActions.editRead(data));
+  editSource (data) {
+    console.log('data of the edit:', data);
+    dispatch(ResourcesActions.editSource(data));
   },
   deleteResource (id) {
     dispatch(ResourcesActions.deleteResource(id));

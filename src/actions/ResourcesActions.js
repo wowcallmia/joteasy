@@ -1,27 +1,30 @@
 import axios from 'axios';
 
 export function addRead (data, currTopicId) {
-  console.log('currTopicId in Actions: ', currTopicId);
+  // console.log('currTopicId in Actions: ', currTopicId);
   return {
     type: 'CREATE_RESOURCE',
     payload: axios.post('/api/resources/', data)
                   .then((res) => res.data)
                   .then((newResource) => axios.put(`/api/topics/${currTopicId}/resources/${newResource._id}`))
+                  .then((res) => res.data.resources.pop())
   };
 }
 
-export function editRead (data) {
+export function editSource (data) {
   return {
-    type: 'EDIT',
-    payload: data
+    type: 'EDIT_RESOURCE',
+    payload: axios.put(`/api/resources/${data._id}`, data)
+                  .then((res) => res.data)
   };
 }
 
-export function doneRead (_id) {
+export function deleteResource (_id) {
   console.log('_id:', _id);
   return {
     type: 'DELETE_RESOURCE',
-    payload: _id
+    payload: axios.delete(`/api/resources/${_id}`)
+                  .then((res) => res.data)
   };
 }
 

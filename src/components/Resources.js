@@ -12,6 +12,10 @@ class Resources extends Component {
     this.props.fetchResources(this.props.currentTopic);
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps: ', nextProps);
+  }
+
   handleSubmit (e, serializedForm) {
     let { addRead, currentTopic } = this.props;
     e.preventDefault();
@@ -22,7 +26,7 @@ class Resources extends Component {
   }
 
   render () {
-    console.log('this.props: ', this.props);
+    console.log('this.props in Resources: ', this.props);
     const type = [
       { text: 'Video', value: 'Video', key: 'Video' },
       { text: 'Book', value: 'Book', key: 'Book' },
