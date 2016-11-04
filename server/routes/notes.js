@@ -26,6 +26,10 @@ router.route('/:id')
   })
   .put((req, res) => {
     Note.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
+    .then((note) => {
+      note.lastUpdated = Date.now();
+      return note.save();
+    })
     .then(note => res.send(note))
     .catch(err => res.status(400).send(err));
   })
