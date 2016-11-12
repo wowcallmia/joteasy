@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Table, Button, Icon, Popup, Header, Image, Modal, Input, Form  } from 'semantic-ui-react';
 import TopicModal from './TopicModal';
 import { browserHistory } from 'react-router';
+import moment from 'moment';
 
 import * as TopicActions from '../actions/TopicActions';
 
@@ -94,7 +95,7 @@ class TopicList extends Component {
               <Table.HeaderCell className='headerRow' onClick={this.sorter}>Topic Name</Table.HeaderCell>
               <Table.HeaderCell className='headerRow' onClick={this.sorter}>Created</Table.HeaderCell>
               <Table.HeaderCell >Last Updated</Table.HeaderCell>
-              <Table.HeaderCell width='2'>Total Notes</Table.HeaderCell>
+              <Table.HeaderCell width='2'>Total Resources</Table.HeaderCell>
               <Table.HeaderCell width='2'>Edit</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -103,12 +104,10 @@ class TopicList extends Component {
             {sorted.map((cur, i) => {
               return (
                 <Table.Row key={i}>
-                  {/* <Table.Cell>{cur.name}</Table.Cell> */}
                   <Table.Cell onClick={this.goToResources.bind(this, cur)}>{cur.name}</Table.Cell>
-                  <Table.Cell width='2'>{cur.timestamp}</Table.Cell>
-                  {/* <Table.Cell width='2'>Nov. 01, 2016 12:40pm</Table.Cell> */}
-                  <Table.Cell width='2'>Oct. 31, 2016 3:40pm</Table.Cell>
-                  <Table.Cell width='1'>34</Table.Cell>
+                  <Table.Cell width='2'>{moment(cur.timestamp).format('lll')}</Table.Cell>
+                  <Table.Cell width='2'>{moment(cur.lastUpdated).format('lll')}</Table.Cell>
+                  <Table.Cell width='1'>{cur.resources.length.toString()}</Table.Cell>
                   <Table.Cell textAlign='left'>
                     <Button.Group icon>
                       <Button inverted size='huge' onClick={() => this.show('inverted', cur)}>

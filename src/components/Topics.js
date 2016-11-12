@@ -12,6 +12,7 @@ class Topic extends Component {
 
   handleSubmit (e, serializedForm) {
     let { addTopic } = this.props;
+    console.log('addTopic:', addTopic);
     e.preventDefault();
     document.adder.reset();
     addTopic(serializedForm);

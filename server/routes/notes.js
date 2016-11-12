@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const Note = require('../models/Note');
+const Resource = require('../models/Resource');
 
 router.route('/')
   .get((req, res) => {
@@ -14,7 +15,23 @@ router.route('/')
   .post((req, res) => {
     Note.create(req.body)
     .then(note => res.send(note))
-    .catch(console.error);
+    .catch(err => res.status(400).send(err));
+  });
+
+router.route('/addToResource/:resourceId')
+  .post((req, res) => {
+    let noteRef;
+    Note.create(req.body)
+    .then(note => {
+      noteRef = note;
+      return Resource.findById(req.params.resourceId)
+    })
+    .then(resource => {
+      resource.notes.push(noteRef._id);
+      return resource.save();
+    })
+    .then(() => res.send(noteRef))
+    .catch(err => res.status(400).send(err));
   });
 
 router.route('/:id')
@@ -34,7 +51,6 @@ router.route('/:id')
     .catch(err => res.status(400).send(err));
   })
   .delete((req, res) => {
-    console.log('INSIDE DELETE#################');
     Note.findByIdAndRemove(req.params.id)
     .then(note => res.send(note))
     .catch(err => res.status(400).send(err));

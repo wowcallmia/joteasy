@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table, Button, Icon, Popup, Header, Image, Modal, Input, Form  } from 'semantic-ui-react';
 import ModalLife from './ModalLife';
+
 import { browserHistory } from 'react-router';
+
+import moment from 'moment';
+
 
 import * as ResourcesActions from '../actions/ResourcesActions';
 
@@ -116,8 +120,9 @@ class ReadingList extends Component {
                   <Table.Cell onClick={this.goToNotes.bind(this, cur)}>{cur.name}</Table.Cell>
                   <Table.Cell>{cur.type}</Table.Cell>
                   <Table.Cell width='4'>{cur.source}</Table.Cell>
-                  <Table.Cell width='2'>{cur.lastUpdated}</Table.Cell>
-                  <Table.Cell width='2'>{cur.timestamp}</Table.Cell>
+                  <Table.Cell width='2'>{moment(cur.lastUpdated).format('lll')}</Table.Cell>
+                  <Table.Cell width='2'>{moment(cur.timestamp).format('lll')}</Table.Cell>
+
                   <Table.Cell width='1'>{cur.notes.length.toString()}</Table.Cell>
                   <Table.Cell textAlign='left'>
                     <Button.Group icon>

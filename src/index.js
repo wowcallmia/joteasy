@@ -5,7 +5,6 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import store from './store';
 
-
 import Layout from './components/Layout';
 import Topics from './components/Topics';
 import Resources from './components/Resources';

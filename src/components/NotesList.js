@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table, Button, Icon, Popup, Header, Image, Modal, Input, Form  } from 'semantic-ui-react';
-import ModalLife from './ModalLife';
-import { browserHistory } from 'react-router';
+import ModalDeath from './ModalDeath';
+import moment from 'moment';
 
-import * as ResourcesActions from '../actions/ResourcesActions';
+import * as NotesActions from '../actions/NotesActions';
 
 class NotesList extends Component {
   constructor () {
@@ -19,7 +19,6 @@ class NotesList extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.sorter = this.sorter.bind(this);
     this.handleSearcher = this.handleSearcher.bind(this);
-    // this._onChange = this._onChange.bind(this);
   }
 
   handleSearcher (e, serializedForm) {
@@ -34,17 +33,17 @@ class NotesList extends Component {
   }
 
   handleSubmit (id, e, serializedForm) {
-    let { editSource } = this.props;
+    let { editNote } = this.props;
     e.preventDefault();
     serializedForm._id = id;
     this.setState({ open: false });
-    // console.log('id in resourceslist: ', id);
-    editSource(serializedForm);
+    // console.log('id in noteslist: ', id);
+    editNote(serializedForm);
   }
 
-  deleteResource (_id) {
-    let { deleteResource } = this.props;
-    deleteResource(_id);
+  deleteNote (_id) {
+    let { deleteNote } = this.props;
+    deleteNote(_id);
   }
 
   show (dimmer, cur) {
@@ -57,10 +56,10 @@ class NotesList extends Component {
 
 
   render () {
-    let { resources } = this.props;
-    console.log('resources in list: ', resources);
+    let { notes } = this.props;
+    console.log('notes in list: ', notes);
     let { sort, search } = this.state;
-    let tempRead = [...resources];
+    let tempRead = [...notes];
     let sorted;
     if (sort === 'Name') {
       sorted = tempRead.sort((a, b) => {
@@ -78,7 +77,7 @@ class NotesList extends Component {
       sorted = tempRead.filter((cur) => cur.name.toLowerCase().includes(search.toLowerCase()));
       console.log('sorted:', sorted);
     }
-    if (!sort && !search) sorted = resources;
+    if (!sort && !search) sorted = notes;
 
     return (
       <div>
@@ -92,11 +91,10 @@ class NotesList extends Component {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell className='headerRow' onClick={this.sorter}>Name</Table.HeaderCell>
-              <Table.HeaderCell className='headerRow' onClick={this.sorter}>Type</Table.HeaderCell>
-              <Table.HeaderCell>SRC</Table.HeaderCell>
+              <Table.HeaderCell className='headerRow' onClick={this.sorter}>Note</Table.HeaderCell>
+              <Table.HeaderCell>Reference</Table.HeaderCell>
               <Table.HeaderCell>Last Updated</Table.HeaderCell>
               <Table.HeaderCell>Created</Table.HeaderCell>
-              <Table.HeaderCell>Total Notes</Table.HeaderCell>
               <Table.HeaderCell>Edit</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -105,19 +103,18 @@ class NotesList extends Component {
             {sorted.map((cur, i) => {
               return (
                 <Table.Row key={i}>
-                  {console.log('cur: ', cur)}
-                  <Table.Cell onClick={this.goToNotes.bind(this, cur)}>{cur.name}</Table.Cell>
-                  <Table.Cell>{cur.type}</Table.Cell>
-                  <Table.Cell width='4'>{cur.source}</Table.Cell>
-                  <Table.Cell width='2'>{cur.lastUpdated}</Table.Cell>
-                  <Table.Cell width='2'>{cur.timestamp}</Table.Cell>
-                  <Table.Cell width='1'>{cur.notes.length.toString()}</Table.Cell>
+                  <Table.Cell>{cur.name}</Table.Cell>
+                  <Table.Cell>{cur.text}</Table.Cell>
+                  <Table.Cell width='4'>{cur.refPoint}</Table.Cell>
+                  <Table.Cell width='2'>{moment(cur.lastUpdated).format('lll')}</Table.Cell>
+                  <Table.Cell width='2'>{moment(cur.timestamp).format('lll')}</Table.Cell>
+                  {/* <Table.Cell width='1'>{cur.notes.length.toString()}</Table.Cell> */}
                   <Table.Cell textAlign='left'>
                     <Button.Group icon>
                       <Button inverted size='huge' onClick={() => this.show('inverted', cur)}>
                         <Icon color='blue' name='edit' />
                       </Button>
-                      <Button inverted size='huge' onClick={this.deleteResource.bind(this, cur._id)}>
+                      <Button inverted size='huge' onClick={this.deleteNote.bind(this, cur._id)}>
                         <Icon color='red' name='trash' />
                       </Button>
                     </Button.Group>
@@ -126,7 +123,7 @@ class NotesList extends Component {
               );
             })}
           </Table.Body>
-          <ModalLife {...this.state} close={this.close} handle={this.handleSubmit} />
+          <ModalDeath {...this.state} close={this.close} handle={this.handleSubmit} />
         </Table>
       </div>
     );
@@ -134,20 +131,18 @@ class NotesList extends Component {
 }
 
 let mapStateToProps = (state) => ({
-  // resources: state.resources
+  notes: state.notes
 });
 
 let mapDispatchToProps = (dispatch) => ({
-  // editSource (data) {
-  //   console.log('data of the edit:', data);
-  //   dispatch(ResourcesActions.editSource(data));
-  // },
-  // deleteResource (id) {
-  //   dispatch(ResourcesActions.deleteResource(id));
-  // },
-  // setCurrentResource (resource) {
-  //   dispatch(ResourcesActions.setCurrentResource(resource));
-  // }
+  editNote (data) {
+    console.log('data of the edit:', data);
+    dispatch(NotesActions.editNote(data));
+  },
+
+  deleteNote (id) {
+    dispatch(NotesActions.deleteNote(id));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesList);
